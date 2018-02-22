@@ -16,6 +16,10 @@ Then, run with:
 
 And then connect via http://localhost:3000/ (replace localhost with any domain that points to an IP address in use on your device).
 
+## Screen grab
+
+![Screen grab of broadcaster](docs/screengrab.png)
+
 ## Credits 
 
 Thanks https://github.com/Keyne for pointing me towards https://github.com/fbsamples/Canvas-Streaming-Example.
