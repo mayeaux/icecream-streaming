@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        var globalStream;
+        var v = document.getElementById('v');
+
+        document.querySelector('#broadcaststop').disabled = true;
+
+        // Setup the video and audio devices.
+        // Limit resolution to ensure quality.
+        var constraints = { 
+          video: {
+            width: { 
+              min: 320, ideal: 320, max: 320 
+            }, 
+            height: { 
+              min: 240, ideal: 240, max: 240 
+            }
+          },
+          audio: true
+        }
+        navigator.mediaDevices.getUserMedia(constraints)
+        .then(function(stream) {
+          globalStream = stream;
+          v.srcObject = stream;
+          v.play();
+        })
+        .catch(function(err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
+        
+        // Action to take when start is pressed.
+        document.querySelector('#broadcaststart').addEventListener('click', (e) => {
+          console.log("Broadcast start button clicked.");
+
+          // Make sure we have a icecast target URL.
+          iceUrl = document.querySelector('#iceurl').value;
+
+          if (!iceUrl) {
+            alert("Please enter the full address to your icecast URL, including username and password.");
+            return;
+          }
+          document.querySelector('#broadcaststart').disabled = true;
+          document.querySelector('#broadcaststop').disabled = false;
+          const ws = new WebSocket(
+            window.location.protocol.replace('http', 'ws') + '//' + // http: -> ws:, https: -> wss:
+              window.location.host +
+              '/stream/' +
+              encodeURIComponent(iceUrl)
+          );
+
+          ws.addEventListener('open', (e) => {
+            console.log('WebSocket Open', e);
+            var mediaRecorder;
+            // mediaStream = document.querySelector('canvas').captureStream(10); // 30 FPS
+            mediaRecorder = new MediaRecorder(globalStream, {
+              mimeType: 'video/webm;codecs=vp8',
+              audioBitsPerSecond : 128000,
+              videoBitsPerSecond : 1500000,
+            });
+
+            mediaRecorder.addEventListener('dataavailable', (e) => {
+              ws.send(e.data);
+            });
+
+            mediaRecorder.addEventListener('stop', ws.close.bind(ws));
+
+            mediaRecorder.start(1000);
+          
+          });
+
+          document.querySelector('#broadcaststop').addEventListener('click', (e) => {
+            console.log("Broadcast stop button clicked.");
+            document.querySelector('#broadcaststart').disabled = false;
+            document.querySelector('#broadcaststop').disabled = true;
+            ws.close();
+          });
+
+          ws.addEventListener('close', (e) => {
+            console.log('WebSocket Close', e);
+          });
+
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <video width=320 height=240 id="v" muted></video>
+    <div>
+      <div>
+        <div>
+          <label for="iceurl">Address of Icecast Server</label>
+        </div>
+        <div>
+          <input size="50" id="iceurl" placeholder="icecast://username:password@server.org:8000">
+        </div>
+     </div>
+    <div>
+      <button id="broadcaststart">Start</button>
+      <button id="broadcaststop">Stop</button>
+    </div>
+    <div>
+      <p>It takes about 30 seconds for the stream to start. Once started it is accessible at:</p>
+    </div>
+  </body>
+</html>
