@@ -20,6 +20,10 @@ And then connect via http://localhost:3000/ (replace localhost with any domain t
 
 ![Screen grab of broadcaster](docs/screengrab.png)
 
+## Limitations
+
+This only works with Firefox, tested on version 58.
+
 ## Credits 
 
 Thanks https://github.com/Keyne for pointing me towards https://github.com/fbsamples/Canvas-Streaming-Example.
