@@ -18,9 +18,9 @@ const wss = new WebSocketServer({
 
 wss.on('connection', (ws, req) => {
   
-  // Ensure that the URL starts with '/stream/', and extract the target URL.
-  let match;
-  if ( !(match = req.url.match(/^\/stream\/(.*)$/)) ) {
+  // Ensure that the URL has '/stream/' in it, and extract the target URL.
+  var match;
+  if ( !(match = req.url.match(/\/stream\/(.*)$/)) ) {
     ws.terminate(); // No match, reject the connection.
     return;
   }

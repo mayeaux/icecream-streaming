@@ -45,8 +45,8 @@
           document.querySelector('#broadcaststop').disabled = false;
           const ws = new WebSocket(
             window.location.protocol.replace('http', 'ws') + '//' + // http: -> ws:, https: -> wss:
-              window.location.host +
-              '/stream/' +
+              window.location.host + window.location.pathname +
+              'stream/' +
               encodeURIComponent(iceUrl)
           );
 
