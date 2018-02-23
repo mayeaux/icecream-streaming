@@ -1,100 +1,36 @@
-<!doctype html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta charset="utf-8">
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        var globalStream;
-        var v = document.getElementById('v');
-
-        document.querySelector('#broadcaststop').disabled = true;
-
-        // Setup the video and audio devices.
-        // Limit resolution to ensure quality.
-        var constraints = { 
-          video: {
-            width: { 
-              min: 320, ideal: 320, max: 320 
-            }, 
-            height: { 
-              min: 240, ideal: 240, max: 240 
-            }
-          },
-          audio: true
-        }
-        navigator.mediaDevices.getUserMedia(constraints)
-        .then(function(stream) {
-          globalStream = stream;
-          v.srcObject = stream;
-          v.play();
-        })
-        .catch(function(err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
-        
-        // Action to take when start is pressed.
-        document.querySelector('#broadcaststart').addEventListener('click', (e) => {
-          console.log("Broadcast start button clicked.");
-
-          // Make sure we have a icecast target URL.
-          iceUrl = document.querySelector('#iceurl').value;
-
-          if (!iceUrl) {
-            alert("Please enter the full address to your icecast URL, including username and password.");
-            return;
-          }
-          document.querySelector('#broadcaststart').disabled = true;
-          document.querySelector('#broadcaststop').disabled = false;
-          const ws = new WebSocket(
-            window.location.protocol.replace('http', 'ws') + '//' + // http: -> ws:, https: -> wss:
-              window.location.host + window.location.pathname +
-              'stream/' +
-              encodeURIComponent(iceUrl)
-          );
-
-          ws.addEventListener('open', (e) => {
-            console.log('WebSocket Open', e);
-            var mediaRecorder;
-            // mediaStream = document.querySelector('canvas').captureStream(10); // 30 FPS
-            mediaRecorder = new MediaRecorder(globalStream, {
-              mimeType: 'video/webm;codecs=vp8',
-              audioBitsPerSecond : 128000,
-              videoBitsPerSecond : 1500000,
-            });
-
-            mediaRecorder.addEventListener('dataavailable', (e) => {
-              ws.send(e.data);
-            });
-
-            mediaRecorder.addEventListener('stop', ws.close.bind(ws));
-
-            mediaRecorder.start(1000);
-          
-          });
-
-          document.querySelector('#broadcaststop').addEventListener('click', (e) => {
-            console.log("Broadcast stop button clicked.");
-            document.querySelector('#broadcaststart').disabled = false;
-            document.querySelector('#broadcaststop').disabled = true;
-            ws.close();
-          });
-
-          ws.addEventListener('close', (e) => {
-            console.log('WebSocket Close', e);
-          });
-
-        });
-      });
-    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Icecast web source client</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="css/icecast.css" rel="stylesheet" type="text/css" />
+    <script src="js/icecast.js"></script>
   </head>
   <body>
+    <h1>Icecast Video Source Client</h1>
     <video width=320 height=240 id="v" muted></video>
     <div>
       <div>
         <div>
-          <label for="iceurl">Address of Icecast Server</label>
+          <label for="iceUser">Username</label>
         </div>
         <div>
-          <input size="50" id="iceurl" placeholder="icecast://username:password@server.org:8000/endpoint">
+          <input size="20" id="iceUser" placeholder="Your username">
         </div>
+        <div>
+          <label for="iceUser">Password</label>
+        </div>
+        <div>
+          <input type="password" size="20" id="icePassword" placeholder="Your password">
+        </div>
+        <div>
+          <label for="iceRoom">Room</label>
+        </div>
+        <div>
+          <input size="20" id="iceRoom" placeholder="The room you want to broadcast to">
+        </div>
+
      </div>
     <div>
       <button id="broadcaststart">Start</button>

@@ -12,13 +12,41 @@ Start with:
 
 Then, run with:
 
-    npm start
+    ICE_DOMAIN=your.icecast.server.org ICE_PORT=8000 npm start
 
 And then connect via http://localhost:3000/ (replace localhost with any domain that points to an IP address in use on your device).
 
 ## Screen grab
 
 ![Screen grab of broadcaster](docs/screengrab.png)
+
+## Proxy via Nginx
+
+Here is a minimal sample configuration for nginx.
+
+    upstream websocket{
+      server localhost:3000;
+    }
+
+    map $http_upgrade $connection_upgrade {
+      default Upgrade;
+      '' close;
+    }
+
+    server {
+      listen *:443;
+
+      location /broadcast/ {
+        proxy_pass http://localhost:3000/;
+      }
+
+      location /broadcast/stream {
+        proxy_pass http://websocket;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+      }
+    }
 
 ## Limitations
 

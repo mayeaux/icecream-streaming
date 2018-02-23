@@ -8,6 +8,14 @@ const server = http.createServer(app).listen(3000, () => {
   console.log('Listening...');
 });
 
+if (!process.env.ICE_DOMAIN || !process.env.ICE_PORT) {
+  console.log("Please set ICE_DOMAIN and ICE_PORT environment variables.");
+  process.exit();
+}
+
+const iceServerDomain = process.env.ICE_DOMAIN;
+const iceServerPort = process.env.ICE_PORT;
+
 // Serve static files out of the www directory, where we will put our HTML page
 app.use(express.static(__dirname + '/www'));
 
@@ -18,15 +26,26 @@ const wss = new WebSocketServer({
 
 wss.on('connection', (ws, req) => {
   
-  // Ensure that the URL has '/stream/' in it, and extract the target URL.
+  // Ensure that the URL has '/stream/' in it, and extract the target user,
+  // password and room..
   var match;
-  if ( !(match = req.url.match(/\/stream\/(.*)$/)) ) {
+  if ( !(match = req.url.match(/\/stream\/(.*)\/(.*)\/(.*)\/$/)) ) {
     ws.terminate(); // No match, reject the connection.
     return;
   }
   
-  const iceUrl = decodeURIComponent(match[1]);
-  console.log('Target icecast URL:', iceUrl);
+  // Set both ICE_DOMAIN and ICE_PORT via environment variables. This ensures
+  // we will only stream to our server to avoid having people use this nodejs
+  // app (and it's CPU cycles) to stream to arbitrary icecast servers.
+  
+
+  const iceUser = decodeURIComponent(match[1]);
+  const icePassword = decodeURIComponent(match[2]);
+  const iceRoom = decodeURIComponent(match[3]);
+  console.log('Target user:', iceUser);
+  console.log('Target room:', iceRoom);
+  const iceUrl = 'icecast://' + iceUser + ':' + icePassword + '@' +
+    iceServerDomain + ':' + iceServerPort + '/' + iceRoom;
   
   // Launch FFmpeg to handle all appropriate transcoding, muxing, and RTMP.
   // If 'ffmpeg' isn't in your path, specify the full path to the ffmpeg binary.
