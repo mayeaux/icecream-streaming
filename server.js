@@ -8,17 +8,14 @@ const server = http.createServer(app).listen(3000, () => {
   console.log('Listening...');
 });
 
-if (!process.env.ICE_DOMAIN || !process.env.ICE_PORT) {
-  console.log("Please set ICE_DOMAIN and ICE_PORT environment variables.");
-  process.exit();
-}
+// Set configuration options, or use defaults.
+require('./www/js/config.js');
+const iceServerDomain = iConfig['iceServerDomain'] || 'example.org'; 
+const iceServerPort = iConfig['iceServerPort'] || '8000';
 
-const iceServerDomain = process.env.ICE_DOMAIN;
-const iceServerPort = process.env.ICE_PORT;
-
-// Serve static files out of the www directory, where we will put our HTML page
+// Serve static files out of the www directory.
 app.use(express.static(__dirname + '/www'));
-
+app.use(/\/w\/.*/, express.static(__dirname + '/www/watch.html'));
 
 const wss = new WebSocketServer({
   server: server
@@ -26,10 +23,11 @@ const wss = new WebSocketServer({
 
 wss.on('connection', (ws, req) => {
   
-  // Ensure that the URL has '/stream/' in it, and extract the target user,
-  // password and room..
+  // Ensure that the URL has 'broadcast/stream/' in it, and extract the target user,
+  // password and room.
   var match;
-  if ( !(match = req.url.match(/\/stream\/(.*)\/(.*)\/(.*)\/$/)) ) {
+  if ( !(match = req.url.match(/^\/stream\/(.*)\/(.*)\/(.*)\/$/)) ) {
+    console.log("Not a matching URL", req.url);
     ws.terminate(); // No match, reject the connection.
     return;
   }
@@ -41,18 +39,17 @@ wss.on('connection', (ws, req) => {
 
   const iceUser = decodeURIComponent(match[1]);
   const icePassword = decodeURIComponent(match[2]);
-  const iceRoom = decodeURIComponent(match[3]);
+  const iceMountPoint = decodeURIComponent(match[3]);
   console.log('Target user:', iceUser);
-  console.log('Target room:', iceRoom);
+  console.log('Target mount point:', iceMountPoint);
   const iceUrl = 'icecast://' + iceUser + ':' + icePassword + '@' +
-    iceServerDomain + ':' + iceServerPort + '/' + iceRoom;
+    iceServerDomain + ':' + iceServerPort + '/' + iceMountPoint;
   
   // Launch FFmpeg to handle all appropriate transcoding, muxing, and RTMP.
   // If 'ffmpeg' isn't in your path, specify the full path to the ffmpeg binary.
   const ffmpeg = child_process.spawn('ffmpeg', [
-    // FFmpeg will read input video from STDIN
+    // FFmpeg will read input video from STDIN.
     '-i', '-',
-    
     '-f', 'webm', '-cluster_size_limit', '2M', '-cluster_time_limit', '5100', '-content_type', 'video/webm',
     // We should be getting video from the browser using a format that icecast
     // can handle so we can just copy to save CPU cycles on the server. 
@@ -79,7 +76,21 @@ wss.on('connection', (ws, req) => {
   
   // FFmpeg outputs all of its messages to STDERR.  Let's log them to the console.
   ffmpeg.stderr.on('data', (data) => {
-    console.log('FFmpeg STDERR:', data.toString());
+    var err = data.toString();
+    console.log('FFmpeg STDERR:', err);
+    // Notify the client of particular errors. We try to use standard http error codes
+    // (and cloudflare augmented ones based on https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
+    if (err.match(/401 Unauthorized/)) {
+      // User/pass not correct
+      ws.send("401: Unauthorized");
+    }
+    if (err.match(/Failed to resolve hostname/)) {
+      ws.send("523: Failed to resolve hostname");
+    }
+    if (err.match(/Connection timed out/)) {
+      ws.send("522: Connection timed out");
+    }
+
   });
 
   // When data comes in from the WebSocket, write it to FFmpeg's STDIN.

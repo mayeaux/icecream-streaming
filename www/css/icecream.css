@@ -1,0 +1,15 @@
+body {
+  margin-left: 5%;
+}
+
+#outreach-directions {
+  display: none;
+}
+
+.html-code {
+  width:100%; 
+  font-family: Monospace; 
+  border:0;
+  height: 4em;
+  width: 50em;
+}
