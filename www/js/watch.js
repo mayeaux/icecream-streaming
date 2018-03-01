@@ -9,7 +9,13 @@ function Watch(config) {
 
   document.querySelector('#titleHeader').innerHTML = pageTitle;
 
+  // Set the right video dimensions.
+  var v = document.querySelector("#v");
+  v.height = videoIdealHeight;
+  v.width = videoIdealWidth;
+
+  // Set the right video source.
   var sourceEl = document.createElement('source');
   sourceEl.setAttribute('src', watchUrl + mountPrefix + mountPoint + '?nocache=' +  Date.now());
-  document.querySelector("#v").append(sourceEl);
+  v.append(sourceEl);
 }

@@ -1,4 +1,4 @@
-function Icecream(config) { 
+function Broadcast(config) { 
   // Break out configuration parameters.
   var pageTitle = config['pageTitle'] || 'Icecream Icecast Video Source Client';
   var iceServerDomain = config['iceServerDomain'] || 'example.org';
@@ -20,6 +20,9 @@ function Icecream(config) {
   // sent back to the server if the user clicks the broadcast button.
   var videoStream; 
   var v = document.getElementById('v');
+
+  v.height = videoIdealHeight;
+  v.width = videoIdealWidth;
 
   // Set display string values based on user configuration.
   document.querySelector('#titleHeader').innerHTML = pageTitle;
@@ -52,6 +55,9 @@ function Icecream(config) {
   })
   .catch(function(err) { 
     console.log(err.name + ": " + err.message); 
+    if (err.name == 'NotAllowedError') {
+      alert("Could not get access to camera and mic.");
+    }
   });
   
   // Action to take when start is pressed.

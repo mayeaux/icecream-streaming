@@ -3,7 +3,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Watch</title>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/css/pure-min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/base-min.css" rel="stylesheet" type="text/css" />
     <link href="/css/icecream.css" rel="stylesheet" type="text/css" />
     <script src="/js/config.js"></script>
     <script src="/js/watch.js"></script>
@@ -14,9 +16,22 @@
     </script>
   </head>
   <body>
+    <div id="header" class="pure-g">
+      <div class="pure-u-2-24 logo">
+        <img id="logo" class="pure-img" src="/images/icecream-small.png" />
+      </div>
+      <div class="pure-u-22-24 title">
+        <span id="titleHeader"></span>
+      </div>
+    </div>
+    <div id="main-content" class="pure-g">
+      <div class="pure-u-1">
+        <h2>Watch</h1>
+        <video controls width="320" height="240" id="v">
+      </div>
+    </div>
+
     <h1 id="titleHeader"></h1>
-    <h2>Watch</h1>
-    <video controls width=320 height=240 id="v">
     </video>
   </body>
 </html>

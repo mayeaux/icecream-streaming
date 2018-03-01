@@ -4,59 +4,62 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Icecast web source client</title>
     <meta name="viewport" content="width=device-width" />
+    <link href="/css/pure-min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/base-min.css" rel="stylesheet" type="text/css" />
     <link href="css/icecream.css" rel="stylesheet" type="text/css" />
-    <script src="js/icecream.js"></script>
+    <script src="js/broadcast.js"></script>
     <script src="js/config.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        Icecream(iConfig);
+        Broadcast(iConfig);
       });
     </script>
   </head>
   <body>
-    <h1 id="titleHeader"></h1>
-    <h2>Broadcaster</h2>
-    <video width=320 height=240 id="v" muted></video>
-    <div>
-      <div>
-        <div>
-          <label for="iceUser">Username</label>
+    <div id="header" class="pure-g">
+      <div class="pure-u-2-24 logo">
+        <img id="logo" class="pure-img" src="/images/icecream-small.png" />
+      </div>
+      <div class="pure-u-22-24 title">
+        <span id="titleHeader"></span>
+      </div>
+    </div>
+    <div id="main-content" class="pure-g">
+      <div class="pure-u-1">
+        <h2>Broadcaster</h2>
+        <video width="320" height="240" id="v" muted></video>
+        <form class="pure-form pure-form-stacked">
+          <fieldset>
+            <label for="iceUser">Username</label>
+            <input size="20" id="iceUser" placeholder="Your username">
+
+            <label for="iceUser">Password</label>
+            <input type="password" size="20" id="icePassword" placeholder="Your password">
+            <div id="mount-point-selection">
+              <label for="iceMount">Room</label>
+              <input size="20" id="iceMount" placeholder="The room you want to broadcast to">
+            </div>
+         </fieldset>
+        </form>
+        <div id="start-stop-area">
+          <button class="pure-button button-start" id="broadcaststart">Start</button>
+          <button class="pure-button button-stop" id="broadcaststop">Stop</button>
+        </div>
+        <div id="status-area">
+          <strong>Status:</strong> <span id="streaming-status">Not broadcasting</span>
+        </div>
+        <div id="message-area">
+          <span id="streaming-message"></span>
         </div>
         <div>
-          <input size="20" id="iceUser" placeholder="Your username">
-        </div>
-        <div>
-          <label for="iceUser">Password</label>
-        </div>
-        <div>
-          <input type="password" size="20" id="icePassword" placeholder="Your password">
-        </div>
-        <div id="mount-point-selection">
-          <div>
-            <label for="iceMount">Room</label>
+          <p>It takes about 30 seconds for the stream to start.</p>
+          <div id="outreach-directions">
+            <p>Publicize the following link to your followers: <a id="view-link" src=""></a>.</p>
+            <p>Or, embed the following code:</p>
+            <div>
+              <textarea id="embed-code" class="html-code" readonly="readonly"> </textarea>
+            </div>
           </div>
-          <div>
-            <input size="20" id="iceMount" placeholder="The room you want to broadcast to">
-          </div>
-        </div>
-     </div>
-    <div>
-      <button id="broadcaststart">Start</button>
-      <button id="broadcaststop">Stop</button>
-    </div>
-    <div>
-      <strong>Status:</strong> <span id="streaming-status">Not broadcasting</span>
-    </div>
-    <div>
-      <span id="streaming-message"></span>
-    </div>
-    <div>
-      <p>It takes about 30 seconds for the stream to start.</p>
-      <div id="outreach-directions">
-        <p>Publicize the following link to your followers: <a id="view-link" src=""></a>.</p>
-        <p>Or, embed the following code:</p>
-        <div>
-          <textarea id="embed-code" class="html-code" readonly="readonly"> </textarea>
         </div>
       </div>
     </div>
