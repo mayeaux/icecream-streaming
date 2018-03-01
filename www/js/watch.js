@@ -11,8 +11,8 @@ function Watch(config) {
 
   // Set the right video dimensions.
   var v = document.querySelector("#v");
-  v.height = videoIdealHeight;
-  v.width = videoIdealWidth;
+  v.height = config['videoIdealHeight'];
+  v.width = config['videoIdealWidth'];
 
   // Set the right video source.
   var sourceEl = document.createElement('source');
