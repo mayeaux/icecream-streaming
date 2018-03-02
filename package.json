@@ -1,5 +1,5 @@
 {
-  "name": "icecast-web-source-client",
+  "name": "icecream",
   "version": "1.0.0",
   "description": "A html5 web client for sending video and audio to an icecast2 server.",
   "main": "server.js",
@@ -11,11 +11,13 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "install": "cp --no-clobber www/index.html.sample www/index.html && cp --no-clobber www/js/config.js.sample www/js/config.js"
   },
   "keywords": [
     "icecast",
-    "stream"
+    "stream",
+    "html5"
   ],
   "author": "Jamie McClelland",
   "license": "GPL-3.0"
