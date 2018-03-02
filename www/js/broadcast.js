@@ -1,6 +1,5 @@
 function Broadcast(config) { 
   // Break out configuration parameters.
-  var pageTitle = config['pageTitle'] || 'Icecream Icecast Video Source Client';
   var iceServerDomain = config['iceServerDomain'] || 'example.org';
   var iceServerPort = config['iceServerPort'] || 8000;
   var enableMountPointSelection = config['enableMountPointSelection'] || false;
@@ -15,6 +14,8 @@ function Broadcast(config) {
   var audioBitsPerSecond = config['audioBitsPerSecond'] || 128000;
   var videoBitsPerSecond = config['audioBitsPerSecond'] || 1500000;
 
+  // Run common code.
+  Icecream(config);
 
   // Declare the video stream being captured by the user. This will get
   // sent back to the server if the user clicks the broadcast button.
@@ -23,9 +24,6 @@ function Broadcast(config) {
 
   v.height = videoIdealHeight;
   v.width = videoIdealWidth;
-
-  // Set display string values based on user configuration.
-  document.querySelector('#titleHeader').innerHTML = pageTitle;
 
   document.querySelector('#broadcaststop').disabled = true;
 

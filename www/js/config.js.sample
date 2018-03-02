@@ -4,6 +4,8 @@
 iConfig = {
   // The title that will display on all pages.
   //   pageTitle: 'Icecream Icecast Video Source Client',
+  // The logo that will be displayed.
+  //   logoPath: '/images/icecream-small.png',
   // Domain name of the server running icecast. ffmpeg will
   // stream to this server via the icecast:// protocol.
   //   iceServerDomain: 'example.org',
