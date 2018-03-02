@@ -11,7 +11,7 @@ iConfig = {
   // Whether or not you want users to be able to choose their mount point.
   // If disabled, then it will default to mountPrefix + username.
   //   enableMountPointSelection: false,
-  //   mountPrefix: 's_',
+  //   mountPrefix: 's-',
   // If you have a different URL for watching your streams (e.g. you are
   // using a proxy via https) enter it here.
   // watchUrl: 'https://example.org/',

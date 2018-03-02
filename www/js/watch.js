@@ -19,5 +19,17 @@ function Watch(config) {
   // Set the right video source.
   var sourceEl = document.createElement('source');
   sourceEl.setAttribute('src', watchUrl + mountPrefix + mountPoint + '?nocache=' +  Date.now());
+  
+  // Handle errors.
+  sourceEl.addEventListener("error", function (err) {
+    console.log("Checking...");
+    console.log(this);
+  });
+  
   v.append(sourceEl);
+}
+
+function failed(e) {
+  console.log("Dudes alot");
+  console.log(e);
 }

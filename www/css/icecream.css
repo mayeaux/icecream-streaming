@@ -26,6 +26,11 @@
 .large {
   font-size: x-large;
 }
+
+.small {
+  font-size: small;
+}
+
 #outreach-directions {
   display: none;
 }

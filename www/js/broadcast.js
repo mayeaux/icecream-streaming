@@ -4,7 +4,7 @@ function Broadcast(config) {
   var iceServerDomain = config['iceServerDomain'] || 'example.org';
   var iceServerPort = config['iceServerPort'] || 8000;
   var enableMountPointSelection = config['enableMountPointSelection'] || false;
-  var mountPrefix = config['mountPrefix'] || 's_';
+  var mountPrefix = config['mountPrefix'] || 's-';
   var watchUrl = config['watchUrl'] || 'https://example.org/';
   var videoMinWidth = config['videoMinWidth'] || 320;
   var videoIdealWidth = config['videoIdealWidth'] || 320;
