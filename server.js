@@ -37,11 +37,14 @@ wss.on('connection', (ws, req) => {
   // app (and it's CPU cycles) to stream to arbitrary icecast servers.
   
 
-  const iceUser = decodeURIComponent(match[1]);
-  const icePassword = decodeURIComponent(match[2]);
-  const iceMountPoint = decodeURIComponent(match[3]);
-  console.log('Target user:', iceUser);
-  console.log('Target mount point:', iceMountPoint);
+  const iceUser = match[1];
+  const icePassword = match[2];
+  const iceMountPoint = match[3];
+
+  // User input comes in URI encoded. Decode for console output, but use
+  // the encoded versions when we pass via command line to ffmpeg.
+  console.log('Target user:', decodeURIComponent(iceUser));
+  console.log('Target mount point:', decodeURIComponent(iceMountPoint));
   const iceUrl = 'icecast://' + iceUser + ':' + icePassword + '@' +
     iceServerDomain + ':' + iceServerPort + '/' + iceMountPoint;
   
@@ -58,7 +61,7 @@ wss.on('connection', (ws, req) => {
     '-acodec', 'copy',
     
     // The output  URL.
-    iceUrl,
+    iceUrl
   ]);
   
   // If FFmpeg stops for any reason, close the WebSocket connection.
