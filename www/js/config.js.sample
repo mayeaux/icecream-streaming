@@ -29,4 +29,6 @@ iConfig = {
   // videoBitsPerSecond: 1500000
   //  Customize the footer
   // footer: '<strong>Icecream</strong> is free software. Browse the <strong>icecream</strong> source code via <a href="https://gitlab.com/jamie/icecream">gitlab</a>.', 
+  //  Print out debugging info (warning: will print passwords).
+  // debug: false
 };

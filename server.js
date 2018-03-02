@@ -12,6 +12,7 @@ const server = http.createServer(app).listen(3000, () => {
 require('./www/js/config.js');
 const iceServerDomain = iConfig['iceServerDomain'] || 'example.org'; 
 const iceServerPort = iConfig['iceServerPort'] || '8000';
+const debug = iConfig['debug'] || false;
 
 // Serve static files out of the www directory.
 app.use(express.static(__dirname + '/www'));
@@ -74,7 +75,12 @@ wss.on('connection', (ws, req) => {
   // These errors most commonly occur when FFmpeg closes and there is still
   // data to write.  If left unhandled, the server will crash.
   ffmpeg.stdin.on('error', (e) => {
-    console.log('FFmpeg STDIN Error', e);
+    // No-op. ffmpeg will print passwords into your log if you print to
+    // console here. Useful for debugging but not production.
+    function();
+    if (debug) {
+      console.log('FFmpeg STDIN Error', e);
+    }
   });
   
   // FFmpeg outputs all of its messages to STDERR.  Let's log them to the console.
