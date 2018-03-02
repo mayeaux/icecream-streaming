@@ -77,7 +77,6 @@ wss.on('connection', (ws, req) => {
   ffmpeg.stdin.on('error', (e) => {
     // No-op. ffmpeg will print passwords into your log if you print to
     // console here. Useful for debugging but not production.
-    function();
     if (debug) {
       console.log('FFmpeg STDIN Error', e);
     }
