@@ -10,7 +10,7 @@ Start with:
 
     npm install
 
-Then, edit www/js/config.js.
+Then, edit www/js/config.js and www/index.html to your liking.
 
 Then, run with:
 
