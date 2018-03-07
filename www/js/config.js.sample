@@ -17,16 +17,12 @@ iConfig = {
   // If you have a different URL for watching your streams (e.g. you are
   // using a proxy via https) enter it here.
   // watchUrl: 'https://example.org/',
-  //  Decide what width and height to use. Smaller means less bandwidth!
-  // videoMinWidth: 320,
-  // videoIdealWidth: 320,
-  // videoMaxWidth: 320,
-  // videoMinHeight: 240,
-  // videoIdealHeight: 240,
-  // videoMaxHeight: 240,
-  //   Decide what bit rates to use.
+  //  Decide what width and height to use by default (user can override). Smaller means less bandwidth!
+  // videoWidth: 320,
+  // videoHeight: 240,
+  //   Decide what bit rates to use by default (user can override).
   // audioBitsPerSecond: 128000,
-  // videoBitsPerSecond: 1500000
+  // videoBitsPerSecond: 500000,
   //  Customize the footer
   // footer: '<strong>Icecream</strong> is free software. Browse the <strong>icecream</strong> source code via <a href="https://gitlab.com/jamie/icecream">gitlab</a>.', 
   //  Print out debugging info (warning: will print passwords).

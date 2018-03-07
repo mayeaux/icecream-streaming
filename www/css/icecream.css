@@ -3,20 +3,33 @@
   margin-right: 5%;
 }
 
+img#logo {
+  vertical-align: middle;
+}
+
+.main-content-broadcast {
+  max-width: 400px;
+}
+
 .title {
   margin: auto;
 }
 
+#title-area {
+  display: inline-block;
+}
+
 #titleHeader {
   font-size: x-large;
+  vertical-align: middle;
 }
 
 #header {
   background-color: #000;
   color: #fff;
   padding-left: 5%;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .intro {
@@ -31,10 +44,6 @@
   font-size: small;
 }
 
-#outreach-directions {
-  display: none;
-}
-
 .html-code {
   width:100%; 
   font-family: Monospace; 
@@ -44,30 +53,61 @@
 }
 
 .button-start,
-.button-stop {
+.button-stop,
+.button-apply{
   color: white;
   border-radius: 4px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .button-start {
-   background: rgb(28, 184, 65); /* this is a green */
+  background: rgb(28, 184, 65); /* this is a green */
 }
 
 .button-stop {
-    background: rgb(223, 117, 20); /* this is an orange */
+  background: rgb(223, 117, 20); /* this is an orange */
 }
-
-#status-area {
+.button-apply {
+  background: rgb(66, 184, 221); /* this is a light blue */
+}
+#user-message-area {
   margin-top: 10px;
 }
 
-#message-area {
+#additional-message-area {
   color: red;
+  margin-top: 3px;
 }
+
+#start-stop-area {
+  padding-top: 10px;
+}
+
 
 #footer {
   font-size: small;
   color: grey;
-  padding-bottom: 10px;
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
+
+#toggle-advanced-options {
+  font-size: small;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#advanced-options {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#menu {
+  margin-top: 15px;
+}
+
+.pure-menu-link {
+  color: #000;
+}
+

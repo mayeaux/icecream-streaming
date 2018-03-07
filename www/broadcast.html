@@ -17,18 +17,44 @@
     </script>
   </head>
   <body>
-    <div id="header" class="pure-g">
-      <div class="pure-u-2-24 logo">
-        <img id="logo" class="pure-img" src="/images/icecream-small.png" />
-      </div>
-      <div class="pure-u-22-24 title">
+    <div id="header">
+      <div id="title-area">
+        <img id="logo" src="/images/icecream-small.png" />
         <span id="titleHeader"></span>
       </div>
     </div>
-    <div id="main-content" class="pure-g">
-      <div class="pure-u-1">
+    <div id="main-content" class="main-content-broadcast">
+      <div>
         <h2>Broadcaster</h2>
+      </div>
+
+      <div>
         <video width="320" height="240" id="v" muted></video>
+      </div>
+
+      <div id="user-message-area">
+        <div id="status-message-area">
+          <strong>Status:</strong> <span id="status-message">Not broadcasting</span>
+        </div>
+        <div id="additional-message-area">
+          <span id="additional-message"></span>
+        </div>
+      </div>
+
+      <div id="start-stop-area">
+        <button class="pure-button button-start" id="broadcast-start">Start</button>
+        <button class="pure-button button-stop" id="broadcast-stop">Stop</button>
+      </div>
+
+      <div id="menu" class="pure-menu pure-menu-horizontal">
+        <ul class="pure-menu-list">
+          <li id="menu-item-login" class="pure-menu-item pure-menu-selected"><a id="menu-link-login" href="#" class="pure-menu-link">Login</a></li>
+          <li id="menu-item-advanced" class="pure-menu-item"><a id="menu-link-advanced" href="#" class="pure-menu-link">Advanced</a></li>
+          <li id="menu-item-share" class="pure-menu-item pure-menu-disabled"><a id="menu-link-share" class="pure-menu-link">Share</a></li>
+        </ul>
+      </div>
+
+      <div id="menu-area-login">
         <form class="pure-form pure-form-stacked">
           <fieldset>
             <label for="iceUser">Username</label>
@@ -42,28 +68,36 @@
             </div>
          </fieldset>
         </form>
-        <div id="start-stop-area">
-          <button class="pure-button button-start" id="broadcaststart">Start</button>
-          <button class="pure-button button-stop" id="broadcaststop">Stop</button>
-        </div>
-        <div id="status-area">
-          <strong>Status:</strong> <span id="streaming-status">Not broadcasting</span>
-        </div>
-        <div id="message-area">
-          <span id="streaming-message"></span>
-        </div>
-        <div>
-          <p>It takes about 30 seconds for the stream to start.</p>
-          <div id="outreach-directions">
-            <p>Publicize the following link to your followers: <a id="view-link" src=""></a>.</p>
-            <p>Or, embed the following code:</p>
-            <div>
-              <textarea id="embed-code" class="html-code" readonly="readonly"> </textarea>
-            </div>
-          </div>
-        </div>
-        <div id="footer"></div>
+      </div>  
+     
+      <div id="menu-area-advanced">
+        <form class="pure-form">
+          <fieldset>
+            <legend>Video quality (kps, video/audio)</legend>
+             <input size="5" id="videoBitsPerSecond">
+             /
+             <input size="5" id="audioBitsPerSecond">
+          </fieldset>
+          <fieldset>
+            <legend>Video Dimensions (w x h)</legend>
+            <input size="4" id="videoWidth">
+            X
+            <input size="4" id="videoHeight">
+          </fieldset>
+          <button class="pure-button button-apply" id="advanced-apply">Apply</button>
+        </form>
       </div>
+      
+      <div id="menu-area-share">
+        <div>
+          <a target="_blank" id="view-link" href="">link</a> | <a target="_blank" id="twitter-link" href="">twitter</a> | <a target="_blank" id="facebook-link" href="">facebook</a>
+        </div>
+        <p>Or, embed the following code:</p>
+        <div>
+          <textarea id="embed-code" class="html-code" readonly="readonly"> </textarea>
+        </div>
+      </div>
+      <div class="pure-u-1" id="footer"></div>
     </div>
   </body>
 </html>
