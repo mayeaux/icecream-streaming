@@ -156,9 +156,7 @@ function Broadcast(config) {
 
     // Setup the embed code.
     var embed_code = '<video controls><source src="' + watchUrl + iceMount + '"></source></video>';
-    embed_code = embed_code.replace(/\</g, '&lt;');
-    embed_code = embed_code.replace(/\>/g, '&gt;');
-    document.querySelector('#embed-code').innerHTML = embed_code;
+    document.querySelector('#embed-code').value = embed_code;
   }
 
   function setEventListeners() {

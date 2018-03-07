@@ -44,14 +44,6 @@ img#logo {
   font-size: small;
 }
 
-.html-code {
-  width:100%; 
-  font-family: Monospace; 
-  border:0;
-  height: 4em;
-  width: 50em;
-}
-
 .button-start,
 .button-stop,
 .button-apply{
