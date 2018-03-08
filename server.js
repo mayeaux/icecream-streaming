@@ -46,7 +46,9 @@ wss.on('connection', (ws, req) => {
     httpsOptions['method'] = 'HEAD';
 
     var request = https.request(httpsOptions, (res) => {
-      ws.send(res.statusCode);
+      ws.send(res.statusCode, function(e) {
+        console.log("Failed to send statusCode. Oh well."); 
+      });
     }).on('error', (e) => {
       // Always send something, don't want to leave the client hanging.
       ws.send("error");
