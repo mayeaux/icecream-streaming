@@ -19,6 +19,14 @@ img#logo {
   display: inline-block;
 }
 
+
+/* This is really for styling the error message if there is not video */
+#player {
+  min-height: 200px;
+  font-style: italic;
+  color: grey;
+}
+
 #titleHeader {
   font-size: x-large;
   vertical-align: middle;

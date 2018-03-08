@@ -40,7 +40,7 @@ function Watch(config) {
     }
     else {
       // uh oh - not ready.
-      player.innerHTML = 'Uh oh, this stream is not available. Maybe it has not started yet. Try waiting a few minutes and refreshing.';
+      player.innerHTML = 'Uh oh, this stream is not available. Maybe it has not started yet? Try waiting a few minutes and reloading the page.';
     }
   });
   ws.addEventListener('close', (e) => {
