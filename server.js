@@ -101,17 +101,17 @@ wss.on('connection', (ws, req) => {
     // These errors most commonly occur when FFmpeg closes and there is still
     // data to write.  If left unhandled, the server will crash.
     ffmpeg.stdin.on('error', (e) => {
-      // No-op. ffmpeg will print passwords into your log if you print to
-      // console here. Useful for debugging but not production.
-      if (debug) {
-        console.log('FFmpeg STDIN Error', e);
-      }
+      console.log('FFmpeg STDIN Error', e);
     });
     
     // FFmpeg outputs all of its messages to STDERR.  Let's log them to the console.
     ffmpeg.stderr.on('data', (data) => {
       var err = data.toString();
-      console.log('FFmpeg STDERR:', err);
+      // ffmpeg will print passwords into your log if you print to
+      // console here. Useful for debugging but not production.
+      if (debug) {
+        console.log('FFmpeg STDERR:', err);
+      }
       // Notify the client of particular errors. We try to use standard http error codes
       // (and cloudflare augmented ones based on https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
       if (err.match(/401 Unauthorized/)) {
