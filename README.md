@@ -78,7 +78,8 @@ Here is a minimal sample configuration for nginx.
         proxy_pass http://localhost:3000/;
       }
 
-      location /stream {
+      # Any request starting with /ws/ is a websocket connection.
+      location /ws/ {
         proxy_pass http://websocket;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;

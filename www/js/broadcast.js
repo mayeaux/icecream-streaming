@@ -214,7 +214,7 @@ function Broadcast(config) {
       const ws = new WebSocket(
         window.location.protocol.replace('http', 'ws') + '//' + // http: -> ws:, https: -> wss:
           window.location.host + 
-          '/stream/' +
+          '/ws/stream/' +
           encodeURIComponent(iceUser) + '/' + 
           encodeURIComponent(icePassword) + '/' + 
           encodeURIComponent(iceMount) + '/'
