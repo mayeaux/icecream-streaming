@@ -29,9 +29,38 @@ function Watch(config) {
   ios_err_msg += 'Then, <a href="vlc://' + bareUrl + '.webm' + noCache + 
     '">watch the stream via vlc</a>';
 
+  function cantPlay(msg) {
+    if (icecream.iosCheck()) {
+      player.innerHTML = msg + ios_err_msg;
+    }
+    else {
+      player.innerHTML = msg + generic_err_msg;
+    }
+  }
+
+  function loadFailOverIfConfigured() {
+    var err_msg = "Uh oh, couldn't load the video! ";
+    // Woops - there was an error loading. We assume it's because the
+    // browser can't handle it.
+    if (offerMp3) {
+      loadFailOver();   
+    }
+    else {
+      // Display error.
+      cantPlay(err_msg);
+    }
+  }
+
   // Load the video player.
   function loadMedia() {
     var v = document.createElement('video');
+
+    // Short circuit to see if we can play video/webm.
+    var canPlay = (v.canPlayType('video/webm'));
+    if (!canPlay) {
+      loadFailOverIfConfigured();
+      return;
+    }
     v.controls = 'control';
 
     // Set the right video source.
@@ -41,21 +70,7 @@ function Watch(config) {
     // Handle errors.
     sourceEl.addEventListener("error", function (err) {
       console.log(this);
-      // Woops - there was an error loading. We assume it's because the
-      // browser can't handle it.
-      if (offerMp3) {
-        loadFailOver();   
-      }
-      else {
-        // Display error.
-        var err_msg = "Uh oh, couldn't load the video! ";
-        if (icecream.iosCheck()) {
-          player.innerHTML = err_msg + ios_err_msg;
-        }
-        else {
-          player.innerHTML = err_msg + generic_err_msg;
-        }
-      }
+      loadFailOverIfConfigured();
     });
     
     // Get rid of our spinner
@@ -68,21 +83,21 @@ function Watch(config) {
 
   // If loading the video player fails, try to load just an mp3 file.
   function loadFailOver() {
+    var a = document.createElement('audio');
+    var canPlay = (a.canPlayType('audio/mp3'));
+    if (!canPlay) {
+      // You are really screwed if you can't load an mp3. 
+      cantPlay("Uh oh, your browser does not support streaming media. ");
+      return;
+    }
     var audioSourceEl = document.createElement('source');
     audioSourceEl.setAttribute('src', bareUrl + '.mp3' + noCache);
     // Handle errors.
     audioSourceEl.addEventListener("error", function (err) {
       console.log(this);
-      // You are really screwed if you can't load an mp3. 
-      var err_msg = "Uh oh, your browser does not support streaming media. ";
-      if (icecream.iosCheck()) {
-        player.innerHTML = err_msg + ios_err_msg;
-      }
-      else {
-        player.innerHTML = err_msg + generic_err_msg;
-      }
+      cantPlay("Uh oh, your browser does not support streaming media. ");
+      return;
     });
-    var a = document.createElement('audio');
     a.controls = 'control';
     // Replace the spinner.
     player.innerHTML = "";
