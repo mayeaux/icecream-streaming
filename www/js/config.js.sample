@@ -11,20 +11,23 @@ iConfig = {
   //   iceServerDomain: 'example.org',
   //   iceServerPort: 8000,
   // Whether or not you want users to be able to choose their mount point.
-  // If disabled, then it will default to mountPrefix + username.
   //   enableMountPointSelection: false,
+  // If disabled, then it will default to mountPrefix + username.
   //   mountPrefix: 's-',
+  // Do you want to offer an mp3 audio only stream? If enabled, this stream
+  // will be offered on devices that can't load webm (iphone, ios, safari, etc).
+  //   offerMp3: false,
   // If you have a different URL for watching your streams (e.g. you are
   // using a proxy via https) enter it here.
-  // watchUrl: 'https://example.org/',
-  //  Decide what width and height to use by default (user can override). Smaller means less bandwidth!
-  // videoWidth: 320,
-  // videoHeight: 240,
-  //   Decide what bit rates to use by default (user can override).
-  // audioBitsPerSecond: 128000,
-  // videoBitsPerSecond: 500000,
-  //  Customize the footer
-  // footer: '<strong>Icecream</strong> is free software. Browse the <strong>icecream</strong> source code via <a href="https://gitlab.com/jamie/icecream">gitlab</a>.', 
-  //  Print out debugging info (warning: will print passwords).
-  // debug: false
+  //   watchUrl: 'https://example.org/',
+  // Decide what width and height to use by default (user can override). Smaller means less bandwidth!
+  //   videoWidth: 320,
+  //   videoHeight: 240,
+  // Decide what bit rates to use by default (user can override).
+  //   audioBitsPerSecond: 128000,
+  //   videoBitsPerSecond: 500000,
+  // Customize the footer
+  //   footer: '<strong>Icecream</strong> is free software. Browse the <strong>icecream</strong> source code via <a href="https://gitlab.com/jamie/icecream">gitlab</a>.', 
+  // Print out debugging info (warning: will print passwords).
+  //   debug: false
 };

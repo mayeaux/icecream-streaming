@@ -8,4 +8,13 @@ function Icecream(config) {
   document.querySelector('#logo').src = logoPath;
   document.querySelector('#footer').innerHTML = footer;
   
+  // Return true if we think it's an ios device.
+  function iosCheck() {
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }

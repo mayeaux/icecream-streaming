@@ -11,7 +11,7 @@ function Broadcast(config) {
   var videoBitsPerSecond = config['audioBitsPerSecond'] || 500000;
 
   // Run common code.
-  Icecream(config);
+  var icecream = Icecream(config);
 
   // The user variables change depending on user input. 
   var userMenuSelected = 'login';
@@ -26,7 +26,7 @@ function Broadcast(config) {
     if (!suitableBrowser()) {
       var msg;
       // Provide different message for iOS users, who are screwed.
-      if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+      if (icecream.iosCheck()) {
         msg = "Sorry! iPhones/iPads are not capable of streaming. ";
       }
       else {

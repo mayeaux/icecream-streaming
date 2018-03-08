@@ -15,6 +15,7 @@ require('./www/js/config.js');
 const iceServerDomain = iConfig['iceServerDomain'] || 'example.org'; 
 const iceServerPort = iConfig['iceServerPort'] || '8000';
 const debug = iConfig['debug'] || false;
+const offerMp3 = iConfig['offerMp3'] || false;
 
 // Serve static files out of the www directory.
 app.use(express.static(__dirname + '/www'));
@@ -27,15 +28,37 @@ const wss = new WebSocketServer({
   server: server
 });
 
+function ffmpegArgs(iceUrl) {
+  args = [
+    // FFmpeg will read input video from STDIN.
+    '-i', '-',
+    '-f', 'webm', 
+    '-cluster_size_limit', '2M', '-cluster_time_limit', '5100', '-content_type', 'video/webm',
+    // We should be getting video and audio from the browser using a format that icecast
+    // can handle so we can just copy to save CPU cycles on the server. 
+    '-vcodec', 'copy', '-acodec', 'copy',
+    iceUrl + '.webm'
+  ];
+
+  if (offerMp3) {
+    // Add an audio-only mp3 stream for devices that can't handle webm.
+    args.append([
+      '-codec:a', 'libmp3lame', '-b:a', '16k', '-ac', '1', '-ar', '22050', '-content_type',
+      'audio/mpeg', '-f', 'mp3', 
+      iceUrl + '.mp3'
+    ]);
+  }
+  return args;
+}
+
 wss.on('connection', (ws, req) => {
-  
   // First, figure out what kind of websocket request it is.
   // It could be a video stream (stream) or a request to check
   // if an URL exists (urlcheck).
   
   // Be sure to handle all errors.
   ws.on("error", (e) => {
-    console.log("error", e);
+    console.log("genercal websocket error ", e);
   });
 
   var match;
@@ -54,16 +77,11 @@ wss.on('connection', (ws, req) => {
     }).on('error', (e) => {
       // Always send something, don't want to leave the client hanging.
       ws.send("error");
-      console.error("error", e);
+      console.error("Error checking URL", e);
     });
     request.end();
   }
   else if (match = req.url.match(/^\/ws\/stream\/(.*)\/(.*)\/(.*)\/$/)) {
-    // Set both ICE_DOMAIN and ICE_PORT via environment variables. This ensures
-    // we will only stream to our server to avoid having people use this nodejs
-    // app (and it's CPU cycles) to stream to arbitrary icecast servers.
-    
-
     const iceUser = match[1];
     const icePassword = match[2];
     const iceMountPoint = match[3];
@@ -77,19 +95,7 @@ wss.on('connection', (ws, req) => {
     
     // Launch FFmpeg to handle all appropriate transcoding, muxing, and RTMP.
     // If 'ffmpeg' isn't in your path, specify the full path to the ffmpeg binary.
-    const ffmpeg = child_process.spawn('ffmpeg', [
-      // FFmpeg will read input video from STDIN.
-      '-i', '-',
-      '-f', 'webm', '-cluster_size_limit', '2M', '-cluster_time_limit', '5100', '-content_type', 'video/webm',
-      // We should be getting video from the browser using a format that icecast
-      // can handle so we can just copy to save CPU cycles on the server. 
-      '-vcodec', 'copy',
-      // Ditto for audio.
-      '-acodec', 'copy',
-      
-      // The output  URL.
-      iceUrl
-    ]);
+    const ffmpeg = child_process.spawn('ffmpeg', ffmpegArgs(iceUrl));
     
     // If FFmpeg stops for any reason, close the WebSocket connection.
     ffmpeg.on('close', (code, signal) => {
