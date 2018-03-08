@@ -33,6 +33,11 @@ wss.on('connection', (ws, req) => {
   // It could be a video stream (stream) or a request to check
   // if an URL exists (urlcheck).
   
+  // Be sure to handle all errors.
+  ws.on("error", (e) => {
+    console.log("error", e);
+  });
+
   var match;
   if (match = req.url.match(/^\/ws\/urlcheck\/(.*)\/$/)) {
     // Request to check url.

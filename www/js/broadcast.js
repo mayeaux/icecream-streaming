@@ -23,11 +23,32 @@ function Broadcast(config) {
   var videoStream; 
 
   function init() {
+    if (!suitableBrowser()) {
+      var msg;
+      // Provide different message for iOS users, who are screwed.
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+        msg = "Sorry! iPhones/iPads are not capable of streaming. ";
+      }
+      else {
+        msg = "Sorry! Your browser is not capable of broadcasting video. ";
+      }
+      msg += "You must use a recent version of Firefox or Chrome/Chromium on a Mac, Windows, Linux or Android computer.";
+      document.querySelector("#main-content").innerHTML = msg;
+      return;
+    }
     setMountPointSelection();
     setStreamQuality();
     setMenuItems();
     setStartStopButtons();
     setEventListeners();
+  }
+
+  // Return false if the browser does not support MediaRecorder.
+  function suitableBrowser() {
+    if (typeof MediaRecorder === "function") { 
+      return true;
+    }
+    return false;
   }
 
   function setMountPointSelection() {
@@ -160,25 +181,25 @@ function Broadcast(config) {
   }
 
   function setEventListeners() {
-    document.querySelector('#menu-link-login').addEventListener('click', (e) => {
+    document.querySelector('#menu-link-login').addEventListener('click', function(e) {
       userMenuSelected = 'login';
       setMenuItems();
       e.preventDefault();
     });
-    document.querySelector('#menu-link-share').addEventListener('click', (e) => {
+    document.querySelector('#menu-link-share').addEventListener('click', function(e) {
       if (userIsStreaming) {
         userMenuSelected = 'share';
         setMenuItems();
       }
       e.preventDefault();
     });
-    document.querySelector('#menu-link-advanced').addEventListener('click', (e) => {
+    document.querySelector('#menu-link-advanced').addEventListener('click', function(e) {
       userMenuSelected = 'advanced';
       setMenuItems();
       e.preventDefault();
     });
 
-    document.querySelector('#advanced-apply').addEventListener('click', (e) => {
+    document.querySelector('#advanced-apply').addEventListener('click', function(e) {
       if (userIsStreaming) {
         alert("Please stop streaming before applying changes.");
         return;
@@ -191,7 +212,7 @@ function Broadcast(config) {
     });
 
     // Action to take when start is pressed.
-    document.querySelector('#broadcast-start').addEventListener('click', (e) => {
+    document.querySelector('#broadcast-start').addEventListener('click', function(e) {
       console.log("Broadcast start button clicked.");
 
       // Make sure we have a icecast target URL.
@@ -227,7 +248,7 @@ function Broadcast(config) {
       setStartStopButtons();
       setMenuItems();
 
-      ws.addEventListener('open', (e) => {
+      ws.addEventListener('open', function(e) {
         console.log('WebSocket Open', e);
         var mediaRecorder;
         // mediaStream = document.querySelector('canvas').captureStream(10); // 30 FPS
@@ -237,7 +258,7 @@ function Broadcast(config) {
           videoBitsPerSecond : videoBitsPerSecond,
         });
 
-        mediaRecorder.addEventListener('dataavailable', (e) => {
+        mediaRecorder.addEventListener('dataavailable', function(e) {
           ws.send(e.data);
         });
 
@@ -247,13 +268,13 @@ function Broadcast(config) {
       
       });
 
-      document.querySelector('#broadcast-stop').addEventListener('click', (e) => {
+      document.querySelector('#broadcast-stop').addEventListener('click', function(e) {
         console.log("Broadcast stop button clicked.");
         userIsStreaming = false;
         ws.close();
       });
 
-      ws.addEventListener('close', (e) => {
+      ws.addEventListener('close', function(e) {
         console.log('WebSocket Close', e);
         if (userIsStreaming) {
           // Uh oh. The websocket closed, but we didn't stop it ourselves.
@@ -269,7 +290,7 @@ function Broadcast(config) {
         setStartStopButtons();
       });
 
-      ws.addEventListener('message', (m) => {
+      ws.addEventListener('message', function(m) {
         console.log(m);
         if (m.data.match(/^401:/)) {
           userAdditionalMessage = "Incorrect username or password";

@@ -14,7 +14,7 @@ function Watch(config) {
     window.location.host + 
     '/ws/urlcheck/' + encodeURIComponent(url) + '/'
   );
-  ws.addEventListener('message', (m) => {
+  ws.addEventListener('message', function(m) {
     console.log("Message", m);
     var player  = document.querySelector("#player");
     if (m.data == "200") {
@@ -31,8 +31,10 @@ function Watch(config) {
         console.log(this);
       });
       
-      v.append(sourceEl);
-      player.append(v);
+      // Get rid of our spinner
+      player.innerHTML = "";
+      v.appendChild(sourceEl);
+      player.appendChild(v);
     }
     else if (m.data == "502") {
       // This seems to be sent by icecast when we are setting up the stream.
@@ -43,7 +45,7 @@ function Watch(config) {
       player.innerHTML = 'Uh oh, this stream is not available. Maybe it has not started yet? Try waiting a few minutes and reloading the page.';
     }
   });
-  ws.addEventListener('close', (e) => {
+  ws.addEventListener('close', function(e) {
     console.log("closed", e);
   });
 
