@@ -23,6 +23,13 @@ function Broadcast(config) {
   var videoStream; 
 
   function init() {
+    // Initial setup. 
+    setMountPointSelection();
+    setMenuItems();
+    setStartStopButtons();
+
+    // Before trying to grab the media or set event listeners, make sure
+    // we can broadcast.
     if (!suitableBrowser()) {
       var msg;
       // Provide different message for iOS users, who are screwed.
@@ -36,10 +43,7 @@ function Broadcast(config) {
       document.querySelector("#player").innerHTML = msg;
       return;
     }
-    setMountPointSelection();
     setStreamQuality();
-    setMenuItems();
-    setStartStopButtons();
     setEventListeners();
   }
 
