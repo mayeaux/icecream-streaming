@@ -1,0 +1,11 @@
+[Unit]
+Description=Start icecream, the icecast web source client
+
+[Service]
+WorkingDirectory=/home/icecream/icecream/
+ExecStart=/usr/bin/node server.js
+User=icecream
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

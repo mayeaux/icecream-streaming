@@ -17,9 +17,11 @@ function Watch(config) {
 
   // What to display if the browser can't properly display the media.
   var generic_err_msg = 'Don\'t fret! You can still see the full video, you ' +
-    'just need to open this address in a more functional browser. ' +
-    'Try: <a target="_blank" href="https://getfirefox.com">Firefox</a>, ' +
-    'Chromium, Chrome, or Opera.'; 
+    'just need to open this address in a more functional web browser. ' +
+    'Copy the web address, then look for Firefox, Chromium, Chrome or Opera in your ' +
+    'start menu or toolbar. If you don\'t see any of those browsers,
+    '<a target="_blank" href="https://www.mozilla.org/en-US/firefox/new">' +
+    'download and install Firefox</a>.'; 
 
   // iOS is so broken they get their own error message.
   var ios_err_msg = 'Don\'t fret! You can still see the full video, ' +
