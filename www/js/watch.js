@@ -56,7 +56,7 @@ function Watch(config) {
     var v = document.createElement('video');
 
     // Short circuit to see if we can play video/webm.
-    var canPlay = (v.canPlayType('video/webm'));
+    var canPlay = v.canPlayType('video/webm');
     if (!canPlay) {
       loadFailOverIfConfigured();
       return;
@@ -84,7 +84,7 @@ function Watch(config) {
   // If loading the video player fails, try to load just an mp3 file.
   function loadFailOver() {
     var a = document.createElement('audio');
-    var canPlay = (a.canPlayType('audio/mp3'));
+    var canPlay = a.canPlayType('audio/mp3');
     if (!canPlay) {
       // You are really screwed if you can't load an mp3. 
       cantPlay("Uh oh, your browser does not support streaming media. ");
