@@ -9,7 +9,7 @@ function Icecream(config) {
   document.querySelector('#footer').innerHTML = footer;
   
   // Return true if we think it's an ios device.
-  var iosCheck = function this.iosCheck() {
+  var iosCheck = function iosCheck() {
     if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
       return true;
     }
