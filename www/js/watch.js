@@ -27,7 +27,7 @@ function Watch(config) {
     '<a href="https://itunes.apple.com/app/apple-store/id650377962?mt=8">' +
     'VLC for Mobile</a> app. ';
   ios_err_msg += 'Then, <a href="vlc://' + bareUrl + '.webm' + noCache + 
-    '">watch the stream via vlc</a>';
+    '">watch the stream via vlc</a>.';
 
   function cantPlay(msg) {
     if (icecream.iosCheck()) {
