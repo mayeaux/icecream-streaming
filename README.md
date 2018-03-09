@@ -125,7 +125,7 @@ Here is a minimal sample configuration for nginx.
 
 ## Limitations
 
-This only works with Firefox and Chrome/Chromium. Users of iOS (iPhone or iPad) cannot broadcast or even view video that is sent.
+This only works with Firefox and Chrome/Chromium. Users of iOS (iPhone or iPad) cannot broadcast at all or view a stream via the browser (they are prompted to install VLC and view the stream vthat way). 
 
 ## Credits 
 
