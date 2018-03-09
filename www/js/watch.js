@@ -23,7 +23,7 @@ function Watch(config) {
 
   // iOS is so broken they get their own error message.
   var ios_err_msg = 'Don\'t fret! You can still see the full video, ' +
-    'you just need to install the ' + 
+    'you just need to install the free ' + 
     '<a href="https://itunes.apple.com/app/apple-store/id650377962?mt=8">' +
     'VLC for Mobile</a> app. ';
   ios_err_msg += 'Then, <a href="vlc://' + bareUrl + '.webm' + noCache + 
