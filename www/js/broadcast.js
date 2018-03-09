@@ -33,7 +33,7 @@ function Broadcast(config) {
         msg = "Sorry! Your browser is not capable of broadcasting video. ";
       }
       msg += "You must use a recent version of Firefox or Chrome/Chromium on a Mac, Windows, Linux or Android computer.";
-      document.querySelector("#main-content").innerHTML = msg;
+      document.querySelector("#player").innerHTML = msg;
       return;
     }
     setMountPointSelection();
