@@ -19,7 +19,7 @@ function Watch(config) {
   var generic_err_msg = 'Don\'t fret! You can still see the full video, you ' +
     'just need to open this address in a more functional web browser. ' +
     'Copy the web address, then look for Firefox, Chromium, Chrome or Opera in your ' +
-    'start menu or toolbar. If you don\'t see any of those browsers,
+    'start menu or toolbar. If you don\'t see any of those browsers,' +
     '<a target="_blank" href="https://www.mozilla.org/en-US/firefox/new">' +
     'download and install Firefox</a>.'; 
 
