@@ -138,15 +138,11 @@ function Broadcast(config) {
       if (userMenuSelected == items[i]) {
         className += "pure-menu-active ";
         document.querySelector(areaId).style.display = 'block';
-        // If share is selected, make sure we have the right share values
-        // displayed.
-        if (items[i] == 'share') {
-          setShareValues();
-        }
       }
       else {
         document.querySelector(areaId).style.display = 'none';
       }
+      // Don't let anyone click on the share tab if we are not streaming.
       if (!userIsStreaming && items[i] == 'share') {
         className += "pure-menu-disabled ";
       }
@@ -156,6 +152,14 @@ function Broadcast(config) {
 
   // Ensure our links in the share area are correct.
   function setShareValues() {
+    // If we are not streaming don't show any share values, they could be
+    // wrong if the user has not put in a valid username and password
+    // and been authorized.
+    if (!userIsStreaming) {
+      document.querySelector('#watch-url-message').innerHTML = null;
+      return;
+    }
+
     var iceMount = document.querySelector('#iceMount').value;
     var iceUser = document.querySelector('#iceUser').value;
     var streamName;
@@ -171,6 +175,10 @@ function Broadcast(config) {
     // Make the plain link show the right link.
     var viewLink = window.location.origin + '/w/' + streamName;
     document.querySelector('#view-link').href = viewLink; 
+
+    // Also display message below video screen with watch link.
+    var watchUrlMessage = 'Watch here: <a target="_blank" href="' + viewLink + '">' + viewLink + '</a>';
+    document.querySelector('#watch-url-message').innerHTML = watchUrlMessage;
 
     var socialMessage = "Watch us live now! " + viewLink;
     var socialLink = encodeURIComponent(socialMessage)
@@ -250,6 +258,7 @@ function Broadcast(config) {
       userAdditionalMessage = null;
       setMessageArea();
       setStartStopButtons();
+      setShareValues();
       setMenuItems();
 
       ws.addEventListener('open', function(e) {
@@ -290,6 +299,7 @@ function Broadcast(config) {
 
         // Shut it all down.
         setMessageArea();
+        setShareValues();
         setMenuItems();
         setStartStopButtons();
       });
