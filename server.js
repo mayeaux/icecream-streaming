@@ -135,7 +135,6 @@ wss.on('connection', (ws, req) => {
 
     // When data comes in from the WebSocket, write it to FFmpeg's STDIN.
     ws.on('message', (msg) => {
-      console.log('DATA', msg);
       ffmpeg.stdin.write(msg);
     });
     
