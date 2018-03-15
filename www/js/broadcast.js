@@ -225,6 +225,7 @@ function Broadcast(config) {
     });
 
     document.querySelector('#advanced-apply').addEventListener('click', function(e) {
+      e.preventDefault();
       if (userIsStreaming) {
         alert("Please stop streaming before applying changes.");
         return;
