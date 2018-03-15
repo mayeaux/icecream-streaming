@@ -27,3 +27,5 @@ Helpful directions are provided to users of unsupported browsers.
 Thanks https://github.com/Keyne for pointing me towards https://github.com/fbsamples/Canvas-Streaming-Example.
 
 Thanks to D Sharon Pruitt for the picture of the ice cream cone (https://commons.wikimedia.org/wiki/File:Ice_cream_cone.jpg).
+
+Thanks to [GiMaWolf](https://commons.wikimedia.org/w/index.php?title=User:GiMaWolf&action=edit&redlink=1) for the clipboard icon (https://commons.wikimedia.org/wiki/File:Clipboard_Pictogram.svg)

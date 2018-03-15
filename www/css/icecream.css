@@ -111,3 +111,7 @@ img#logo {
   color: #000;
 }
 
+.input-icon {
+  vertical-align: middle;
+  padding-left: 8px;
+}

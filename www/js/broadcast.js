@@ -193,6 +193,19 @@ function Broadcast(config) {
   }
 
   function setEventListeners() {
+    document.querySelector('#copy-to-clipboard').addEventListener('click', function(e) {
+      var embed_code = document.querySelector('#embed-code');
+      embed_code.select();
+      try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Copying text command was ' + msg);
+      } catch (err) {
+        alert("Sorry, copying the code failed. Please select and hit ctl-c manually.");
+        console.log('Oops, unable to copy');
+      }
+    });
+
     document.querySelector('#menu-link-login').addEventListener('click', function(e) {
       userMenuSelected = 'login';
       setMenuItems();
