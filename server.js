@@ -140,7 +140,9 @@ wss.on('connection', (ws, req) => {
     
     // If the client disconnects, stop FFmpeg.
     ws.on('close', (e) => {
-      ffmpeg.kill('SIGINT');
+      console.log("Closing connection");
+      ffmpeg.stdin.end();
+      ffmpeg.kill();
     });
   }
   else {
