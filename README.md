@@ -29,3 +29,7 @@ Thanks https://github.com/Keyne for pointing me towards https://github.com/fbsam
 Thanks to D Sharon Pruitt for the picture of the ice cream cone (https://commons.wikimedia.org/wiki/File:Ice_cream_cone.jpg).
 
 Thanks to [GiMaWolf](https://commons.wikimedia.org/w/index.php?title=User:GiMaWolf&action=edit&redlink=1) for the clipboard icon (https://commons.wikimedia.org/wiki/File:Clipboard_Pictogram.svg)
+
+## License
+
+What's with the Facebook license? Yeah, I know. Even though this project has *nothing* to do with Facebook and I hate the company, it is a derivative of [some code published to help people stream to Facebook](https://github.com/fbsamples/Canvas-Streaming-Example) which sadly was released under this license. Until I figure out a better alternative, I'm including the license with the project.
