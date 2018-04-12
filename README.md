@@ -32,4 +32,4 @@ Thanks to [GiMaWolf](https://commons.wikimedia.org/w/index.php?title=User:GiMaWo
 
 ## License
 
-What's with the Facebook license? Yeah, I know. Even though this project has *nothing* to do with Facebook and I hate the company, it is a derivative of [some code published to help people stream to Facebook](https://github.com/fbsamples/Canvas-Streaming-Example) which sadly was released under this license. Until I figure out a better alternative, I'm including the license with the project.
+What's with the Facebook license? Yeah, I know. Even though this project has *nothing* to do with Facebook and I hate the company, it is a derivative of [some code published to help people stream to Facebook](https://github.com/fbsamples/Canvas-Streaming-Example) which sadly was released under this license. Until we figure out a better alternative that allows us to fully release this software as GPL, we are including the license with the project.
