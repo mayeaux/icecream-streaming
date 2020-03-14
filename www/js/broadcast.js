@@ -280,7 +280,7 @@ function Broadcast(config) {
         var mediaRecorder;
         // mediaStream = document.querySelector('canvas').captureStream(10); // 30 FPS
         mediaRecorder = new MediaRecorder(videoStream, {
-          mimeType: 'video/webm;codecs=vp8',
+          mimeType: 'video/webm;codecs=opus,vp8',
           audioBitsPerSecond : audioBitsPerSecond,
           videoBitsPerSecond : videoBitsPerSecond,
         });
