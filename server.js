@@ -36,7 +36,7 @@ function ffmpegArgs(iceUrl) {
     '-cluster_size_limit', '2M', '-cluster_time_limit', '5100', '-content_type', 'video/webm',
     // We should be getting video and audio from the browser using a format that icecast
     // can handle so we can just copy to save CPU cycles on the server. 
-    '-vcodec', 'copy', '-acodec', 'copy',
+    '-vcodec', 'copy', '-acodec', 'copy', '-ice_public', '0',
     iceUrl + '.webm'
   ];
 
@@ -44,7 +44,7 @@ function ffmpegArgs(iceUrl) {
     // Add an audio-only mp3 stream for devices that can't handle webm.
     args.append([
       '-codec:a', 'libmp3lame', '-b:a', '16k', '-ac', '1', '-ar', '22050', '-content_type',
-      'audio/mpeg', '-f', 'mp3', 
+      'audio/mpeg', '-f', 'mp3', '-ice_public', '0',
       iceUrl + '.mp3'
     ]);
   }
